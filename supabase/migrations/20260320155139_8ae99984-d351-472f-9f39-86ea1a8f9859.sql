@@ -1,0 +1,1 @@
+ALTER TABLE public.payroll_runs ADD COLUMN branch_id uuid REFERENCES public.branches(id) ON DELETE SET NULL;

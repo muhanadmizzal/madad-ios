@@ -1,0 +1,16 @@
+project_id = "ejgvvgraxbsswguvdgpa"
+
+[functions.public-apply]
+verify_jwt = false
+
+[functions.invite-user]
+verify_jwt = false
+
+[functions.interview-reminders]
+verify_jwt = false
+
+[functions.bg-check-upload]
+verify_jwt = false
+
+[functions.api-v1]
+verify_jwt = false

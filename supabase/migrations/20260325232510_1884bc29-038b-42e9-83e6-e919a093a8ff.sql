@@ -1,0 +1,1 @@
+ALTER TABLE public.positions ALTER COLUMN status SET DEFAULT 'vacant';

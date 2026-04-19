@@ -1,0 +1,41 @@
+services:
+  local-api:
+    build:
+      context: ./local-runtime
+    container_name: madad-local-api
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4000
+      LOCAL_RUNTIME_DATA_DIR: /var/lib/madad/data
+      LOCAL_RUNTIME_STORAGE_DIR: /var/lib/madad/storage
+      LOCAL_RUNTIME_DEFAULT_TENANT_ID: local-tenant
+      LOCAL_RUNTIME_DEFAULT_TENANT_NAME: MADAD Local
+      CLOUD_SYNC_URL: ${CLOUD_SYNC_URL:-}
+      CLOUD_SYNC_API_KEY: ${CLOUD_SYNC_API_KEY:-}
+      LOCAL_RUNTIME_JWT_SECRET: ${LOCAL_RUNTIME_JWT_SECRET:-madad-local-runtime-secret}
+      LOCAL_RUNTIME_ACTIVATION_SECRET: ${LOCAL_RUNTIME_ACTIVATION_SECRET:-madad-local-activation-secret}
+    ports:
+      - "4000:4000"
+    volumes:
+      - madad-local-data:/var/lib/madad/data
+      - madad-local-storage:/var/lib/madad/storage
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: madad-frontend
+    environment:
+      VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${VITE_SUPABASE_PUBLISHABLE_KEY}
+      VITE_LOCAL_API_URL: ${VITE_LOCAL_API_URL:-http://localhost:4000}
+    depends_on:
+      - local-api
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  madad-local-data:
+  madad-local-storage:
