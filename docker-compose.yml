@@ -35,7 +35,8 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-
+- name: Build iOS Action
+  uses: sparkfabrik/ios-build-action@v2.3.2
 volumes:
   madad-local-data:
   madad-local-storage:
